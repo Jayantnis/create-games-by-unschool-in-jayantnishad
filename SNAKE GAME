@@ -1,1 +1,227 @@
+#include<stdio.h>
+#include<conio.h>///////ok
+#include<stdlib.h>
+///**``````````````````DEVELOPER SNAKE GAME BY @_JAYANT_ND*``````````````````````**///
+int width=50, height=50;
+int x,y/*snakehead*/;
+int fruitx,fruity,score,gameover,flagcontrol;//need rand functions at #include<stdlib.in>
+int tailx[100],taily[100],counttail=0;//(!A) two array created,and counttail is set of zero
+//at finite eating at length was increasing
+	int j;
+void condition()
+{
+	printf("Welcome , User\n\t\n *please Enter any press key:- \t\a\t");
+	scanf("%d",j);
+	printf("\n\a\t @HELLO ,start The Snake Game\t\n\n");
+	printf("\a\a\aEnjoy  Snake GAME at control with keyborad switch in :- a w s d ");
+
+}
+
+
+/*initial value setup*/
+void setup()
+{	gameover=0;
+  x=width/25;
+  y=height/25;
+  
+  label1:
+  fruitx=rand()%50;//bunder fruit solving prblem at get's fruits:-x,y point
+  if(fruitx==0)
+  goto label1;
+	
+label2:
+  fruity=rand()%50;//bunder fruit solving prblem at get's fruits:-x,y point
+  if(fruity==0)
+  goto label2;
+  
+ score=0;
+
+
+}
+
+
+/*drawing the space at place*/
+void draw()
+{
+	int i,j,k;
+	system("cls");
+	for(i=0;i<width;i++)
+	{
+	
+		for(j=0;j<height;j++)
+		{
+			if(j==0||j==height-1||i==0||i==width-1)
+			{ 
+				printf("*");
+			}
+			else
+			{   ///null place empty facesess
+				if(i==x && j==y)
+				{
+					printf("O");
+				}
+				else if(i==fruitx && j==fruity)
+				{
+					
+					printf("F");
+				}
+				else
+				{//creating control counttail 'k' variable
+					int ch=0;
+					for(k=0;k<counttail;k++)//matching the value of tail x=i,y=j;
+					{
+						if(i==tailx[k] && j==taily[k])
+						{
+							printf("o");
+						 ch=1;
+						}
+					}
+					
+					if(ch==0)
+					printf(" ");
+				}
+			}
+		}
+	printf("\n");
+	}
+	printf("SCORE= %d",score);
+}//end a draw functiosn
+
+//directions
+void input()
+{//globle flagcontrol//
+	if(kbhit())
+	{
+		switch(getch())
+		{
+			case 'w':
+				flagcontrol=1;
+				break;
+			case 's':
+				flagcontrol=2;
+				break;
+			case 'd':
+				flagcontrol=3;
+				break;
+			case 'a':
+				flagcontrol=4;
+				break;
+			case 'x':
+				gameover=1;
+				break;
+		}
+	}
+}
+//ooooooOtails of following so let's logic//
+void makelogic()
+{	//logic segment adding to logic at tails of snake at suppose now two array so
+	//(!A)
+	int prex,prey,pre2x,pre2y,i;
+	
+	 prex = tailx[0];
+	 prey = taily[0];//snake lenght quradrant
+	
+	tailx[0] =x;//correct 
+	taily[0] =y;	
+	///now quardenate system so now switch at exchanging the numbers
+	for(i=1;i<counttail;i++)
+	{/*segment switching at box of numbers prex [] prey[] pre2x[] pre2y[]*/
+	
+		pre2x=tailx[i];//nw tailx,y
+		pre2y=taily[i];
+	
+	tailx[i]=prex;
+	taily[i]=prey;//cr tailx,y
+	
+		prex=pre2x;//old tails x,y;
+		prey=pre2y;
+	
+	}
+	
+	switch(flagcontrol)
+	{
+		case 1:
+			  x--;
+		      break;
+		case 2:
+			  x++;
+		      break;
+		case 3:
+			  y++;
+			  break;
+		case 4:
+			  y--;
+		      break;
+		
+		default:
+			
+			  break;
+	}
+	
+	if(x<0||x>width||y<0||y>height)
+	
+		gameover=1;
+	for(i=0;i<counttail;i++)
+	{
+		if(x==tailx[i] && y==taily[i])
+		gameover=1;
+	}
+	
+	if(x==fruitx && y==fruity)//new fruit generate 
+	{
+		label3:
+     fruitx=rand()%50;
+     if(fruitx==0)
+       goto label3;
+	
+		label4:
+      fruity=rand()%50;
+    if(fruity==0)
+     goto label4;
+  
+	  score+=5;
+	counttail++;//which seg-ments
+	
+	}
+	
+}
+
+
+int main()
+{	int C;
+	int m,n,l;
+	int a;
+	
+//looping loading for snake in very fast so bacome for fruit is not complete eating 
+//so that was the reasion in looping control at infinite and space inside at looping controlling
+//speed management systm so now variable declaractions so ' m ,n ,l ' now applable for looping ,
+//initinaly value
+ condition();
+ setup();
+		while(!gameover)
+			{	//now infinite loop
+				draw();
+				input();
+				makelogic();
+			
+				/*~ looping overloading in *Reasion to snake slow speed~*/
+				for(m=0;m<1000;m++)
+				{
+					for(n=0;n<1000;n++)
+					{
+						for(l=0;l<100;l++)
+						{
+				
+						}
+					}
+				}
+			
+			}
+		
+	
+		
+	
+	return 0;
+
+}
 
